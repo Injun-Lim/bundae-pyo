@@ -1,4 +1,4 @@
-package fileIO;
+import java.util.Random;
 
 public class arrayT1 {
 
@@ -9,35 +9,31 @@ public class arrayT1 {
 //		String[][] name = new String[20][5]; 
 		String name[][] = { // x값은 기수별, y값은 동기 번호
 				{"김유성","조권영","임인준"},
-				{"강효찬","배진형"},
+				{"강효찬","배진형",},
 				{"정길환","곽준호"},
 				{"안기석"},
 				{"강성욱"}
 		};
-		
-		for(int i = 0 ; i < name.length ; i++){
-			int randTemp[] = new int[name[i].length];
-			int temp = 0;
+		Random r = new Random(); //랜덤으로 섞어서
+		String temp = null;
+		for(int i = 0 ; i < name.length ; i++){  //값을 i,0번인덱스부터 i,j값까지 서로 치환
 			for(int j = 0; j<name[i].length ; j++){
-//				System.out.print(name[i][j] + " ");
-				for( int k = 0; k<name[i].length;){
-					temp = (int)(Math.random()*name[i].length);
-					if(temp != randTemp[k]){
-						randTemp[j] = temp;
-						System.out.println(name[i][j] +" : " +randTemp[j]);
-						break;
-					}
-				}
+				int d =r.nextInt(name[i].length);
+				temp = name[i][j];
+				name[i][j]=name[i][d];
+				name[i][d]=temp;	
+			}
+		}
+		
+		for(int i = 0 ; i < name.length ; i++){ // 출력
+			for(int j = 0; j<name[i].length ; j++){
+				System.out.print(name[i][j] + " ");
 			}
 			System.out.println();
-//			
-//			System.out.println( (int) (Math.random()*name[i].length));
-			
 		}
-
 	}
-
 }
+
 // http://mainia.tistory.com/2323   
 // List 참고 사이트
 // http://arabiannight.tistory.com/entry/%EC%9E%90%EB%B0%94Java-String%EC%9D%84-List-List%EB%A5%BC-String-%EB%B0%B0%EC%97%B4%EB%A1%9C-%EB%B3%80%ED%99%98
