@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -27,7 +28,7 @@ public class arrayT1 {
 				{"강성욱"},
 				{"이원석"},
 				{"심종현"},
-				{"여동근","이석우"}
+				{"여동근","김석우"}
 		};
 		Random r = new Random(); //랜덤으로 섞어서
 		String temp = null;
@@ -56,36 +57,60 @@ public class arrayT1 {
 			}
 		}
 		
-		List<String> otherList = new ArrayList<String>(); //열외자들 입력 (0:소경 1:항해사 2:채증 3:채증보조)
-		Scanner scan = new Scanner(System.in);
-		System.out.print("소경 이름 : ");
-		otherList.add(scan.next());
-		System.out.print("항해사 이름 : ");
-		otherList.add(scan.next());
-		System.out.print("채증 이름 : ");
-		otherList.add(scan.next());
-		System.out.print("채증 보조 이름 : ");
-		otherList.add(scan.next());
-		for(; ;){ //무한루프로 기타 열외자 이름 입력받음 ( '끝' 입력시 루프 탈출 )
-			System.out.print("기타 영외활동 등 열외자 이름('끝'이라고 입력시 열외자 입력 종료) : ");
-			otherList.add(scan.next());
-			if(otherList.contains("끝")){
-				System.out.println(otherList.get(otherList.size()-1));
-				otherList.remove("끝");
-				break;
-			}
-		}
-		
-		for(int i = 0; i < nameList.size(); i++){ // List 전체 출력
-			System.out.print(nameList.get(i) + " ");
-			System.out.println();
-		}
-		
-		for(int i = 0; i < otherList.size(); i++)
-			System.out.println(nameList.remove(nameList.indexOf(otherList.get(i)))); // 열외자 인덱스 삭제
+//		List<String> otherList = new ArrayList<String>(); //열외자들 입력 (0:소경 1:항해사 2:채증 3:채증보조)
+//		Scanner scan = new Scanner(System.in);
+//		System.out.print("소경 이름 : ");
+//		otherList.add(scan.next());
+//		System.out.print("항해사 이름 : ");
+//		otherList.add(scan.next());
+//		System.out.print("채증 이름 : ");
+//		otherList.add(scan.next());
+//		System.out.print("채증 보조 이름 : ");
+//		otherList.add(scan.next());
+//		for(; ;){ //무한루프로 기타 열외자 이름 입력받음 ( '끝' 입력시 루프 탈출 )
+//			System.out.print("기타 영외활동 등 열외자 이름('끝'이라고 입력시 열외자 입력 종료) : ");
+//			otherList.add(scan.next());
+//			if(otherList.contains("끝")){
+//				System.out.println(otherList.get(otherList.size()-1));
+//				otherList.remove("끝");
+//				break;
+//			}
+//		}
+//		
+//		for(int i = 0; i < otherList.size(); i++)
+//			System.out.println(nameList.remove(nameList.indexOf(otherList.get(i)))); // 열외자 인덱스 삭제
 		
 		for(int i = 0; i < nameList.size(); i++) // 열외 삭제 후 전체 출력
 			System.out.print(nameList.get(i) + " ");
+		
+		for(int i = 0; i < 8; i+=4){
+			Collections.swap(nameList, i, i+2);
+			Collections.swap(nameList, i+2, i+3);
+		}
+		for(int i = nameList.size()-1; i>=8; i-=4){
+			Collections.swap(nameList, i, i-3);
+			Collections.swap(nameList, i, i-1);
+		}
+		
+		System.out.println();
+		System.out.println("\t1분대\t2분대\t3분대\t4분대");
+		
+		System.out.print("분대장\t");
+		for(int i = 0; i < 4; i++)
+			System.out.print(nameList.get(i) + "\t");
+		
+		for(int i = nameList.size()-1 ; i >= 8 ; i--){
+			if(i%4 == 0){
+				System.out.println();
+				System.out.print(i/4 + "분대\t");
+			}
+			System.out.print(nameList.get(i) + "\t");
+		}
+		
+		System.out.println();
+		System.out.print("부분대장\t");
+		for(int i = 4; i < 8; i++)
+			System.out.print(nameList.get(i) + "\t");
 	}
 }
 
