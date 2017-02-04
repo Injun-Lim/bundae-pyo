@@ -32,7 +32,7 @@ public class arrayT1 {
 		};
 		Random r = new Random(); //랜덤으로 섞어서
 		String temp = null;
-		List<String> nameList = new ArrayList<String>();
+		List<String> nameList = new ArrayList<String>(); //대원들 이름을 차례로 넣어줄 List
 		
 		
 		for(int i = 0 ; i < name.length ; i++){  //값을 i,0번인덱스부터 i,j값까지 서로 치환
@@ -57,52 +57,60 @@ public class arrayT1 {
 			}
 		}
 		
-//		List<String> otherList = new ArrayList<String>(); //열외자들 입력 (0:소경 1:항해사 2:채증 3:채증보조)
-//		Scanner scan = new Scanner(System.in);
-//		System.out.print("소경 이름 : ");
-//		otherList.add(scan.next());
-//		System.out.print("항해사 이름 : ");
-//		otherList.add(scan.next());
-//		System.out.print("채증 이름 : ");
-//		otherList.add(scan.next());
-//		System.out.print("채증 보조 이름 : ");
-//		otherList.add(scan.next());
-//		for(; ;){ //무한루프로 기타 열외자 이름 입력받음 ( '끝' 입력시 루프 탈출 )
-//			System.out.print("기타 영외활동 등 열외자 이름('끝'이라고 입력시 열외자 입력 종료) : ");
-//			otherList.add(scan.next());
-//			if(otherList.contains("끝")){
-//				System.out.println(otherList.get(otherList.size()-1));
-//				otherList.remove("끝");
-//				break;
-//			}
-//		}
-//		
-//		for(int i = 0; i < otherList.size(); i++)
-//			System.out.println(nameList.remove(nameList.indexOf(otherList.get(i)))); // 열외자 인덱스 삭제
+		List<String> otherList = new ArrayList<String>(); //열외자들 입력 (0:소경 1:항해사 2:채증 3:채증보조)
+		Scanner scan = new Scanner(System.in);
+		System.out.print("소경 이름 : ");
+		otherList.add(scan.next());
+		System.out.print("항해사 이름 : ");
+		otherList.add(scan.next());
+		System.out.print("채증 이름 : ");
+		otherList.add(scan.next());
+		System.out.print("채증 보조 이름 : ");
+		otherList.add(scan.next());
+		for(; ;){ //무한루프로 기타 열외자 이름 입력받음 ( '끝' 입력시 루프 탈출 )
+			System.out.print("기타 영외활동 등 열외자 이름('끝'이라고 입력시 열외자 입력 종료) : ");
+			otherList.add(scan.next());
+			if(otherList.contains("끝")){
+				otherList.remove("끝");
+				break;
+			}
+		}
 		
-		for(int i = 0; i < nameList.size(); i++) // 열외 삭제 후 전체 출력
-			System.out.print(nameList.get(i) + " ");
+		for(int i = 0; i < otherList.size(); i++)
+			nameList.remove(nameList.indexOf(otherList.get(i))); // 열외자 인덱스 삭제
+		
+//		for(int i = 0; i < nameList.size(); i++) // 열외 삭제 후 전체 출력
+//			System.out.print(nameList.get(i) + " ");
 		
 		for(int i = 0; i < 8; i+=4){
+			Collections.swap(nameList, i, i+1);
 			Collections.swap(nameList, i, i+2);
-			Collections.swap(nameList, i+2, i+3);
 		}
-		for(int i = nameList.size()-1; i>=8; i-=4){
+		for(int i = nameList.size()-1; i>=11; i-=4){
 			Collections.swap(nameList, i, i-3);
 			Collections.swap(nameList, i, i-1);
 		}
 		
 		System.out.println();
-		System.out.println("\t1분대\t2분대\t3분대\t4분대");
+		System.out.println("\t4분대\t3분대\t2분대\t1분대");
 		
 		System.out.print("분대장\t");
 		for(int i = 0; i < 4; i++)
 			System.out.print(nameList.get(i) + "\t");
 		
 		for(int i = nameList.size()-1 ; i >= 8 ; i--){
-			if(i%4 == 0){
+			if(i%4 == (nameList.size()-1)%4){
 				System.out.println();
-				System.out.print(i/4 + "분대\t");
+				System.out.print((nameList.size()-1)/4-i/4+2 + "번 줄\t");
+				if(i == 7+(nameList.size())%4){ //부분대장 빼고 4나눠서 남은 인원 (마지막줄 배열)
+					if((nameList.size())%4 == 1)
+						System.out.print("\t\t\t" + nameList.get(8) + "\t");
+					if((nameList.size())%4 == 2)
+						System.out.print(nameList.get(8) + "\t\t\t" + nameList.get(9));
+					if((nameList.size())%4 == 3)
+						System.out.print(nameList.get(9) + "\t\t" + nameList.get(8)+ "\t" + nameList.get(10));
+					break;
+				}
 			}
 			System.out.print(nameList.get(i) + "\t");
 		}
@@ -111,6 +119,11 @@ public class arrayT1 {
 		System.out.print("부분대장\t");
 		for(int i = 4; i < 8; i++)
 			System.out.print(nameList.get(i) + "\t");
+		
+		System.out.println();System.out.println();
+		System.out.println("현원 (+소경,항해사,채증,채증보조): [" + nameList.size() + "+4]");
+		System.out.println("소경 : " + otherList.get(0) + "\t항해사 : " + otherList.get(1));
+		System.out.println("채증 : " + otherList.get(2) + "\t채증보조 : " + otherList.get(3));
 	}
 }
 
