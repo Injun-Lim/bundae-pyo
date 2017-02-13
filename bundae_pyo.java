@@ -1,5 +1,6 @@
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -8,7 +9,7 @@ public class arrayT1 {
 
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException{
 		
 //		String[][] name = new String[20][5]; 
 		String name[][] = { // x값은 기수별, y값은 동기 번호
@@ -154,8 +155,8 @@ public class arrayT1 {
 		result.set(n-2 , nameList.get(5));
 		result.set(n-1 , nameList.get(7));
 		
-		System.out.println();
-		System.out.println("4분대\t3분대\t2분대\t1분대");
+		PrintWriter pw = new PrintWriter("C:/Users/user/Desktop/eclipse/out.txt"); // 괄호 안의 경로로 파일이 생성
+		pw.println("4분대\t3분대\t2분대\t1분대");
 		for( int i = 0 ; i < n ; i++){ // 전체 출력
 			if(i % 4 == 0){       // 비어있는 줄 삭제
 				if(result.get(i) == " "){
@@ -164,15 +165,17 @@ public class arrayT1 {
 					}
 				}
 			}
-			System.out.print(result.get(i) + "\t");
+			pw.print(result.get(i) + "\t");
 			if(i%4 == 3)
-				System.out.println();
-		}		
+				pw.println();
+		}
 		
-		System.out.println();System.out.println();
-		System.out.println("현원 (+소경,항해사,채증,채증보조): [" + nameList.size() + "+4]");
-		System.out.println("소경 : " + otherList.get(0) + "\t항해사 : " + otherList.get(1));
-		System.out.println("채증 : " + otherList.get(2) + "\t채증보조 : " + otherList.get(3));
+		pw.println();pw.println();  // 열외자들 목록 뿌려주기 위함
+		pw.println("현원 (+소경,항해사,채증,채증보조): [" + nameList.size() + "+4]");
+		pw.println("소경 : " + otherList.get(0) + "\t항해사 : " + otherList.get(1));
+		pw.println("채증 : " + otherList.get(2) + "\t채증보조 : " + otherList.get(3));
+		pw.flush();  //flush = write를 쓴 데이터를 뿌려주고 데이터 삭제
+		pw.close();  //close = 스트림 닫기
 	}
 }
 
