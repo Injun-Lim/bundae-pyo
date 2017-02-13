@@ -185,3 +185,5 @@ public class arrayT1 {
 // Array -> List
 // http://debong.tistory.com/entry/%EB%AA%85%ED%92%88Java38-2%EC%B0%A8%EC%9B%90%EB%B0%B0%EC%97%B4%EC%97%90-%EB%9E%9C%EB%8D%A4%EC%B6%9C%EB%A0%A5
 // 2차원배열 랜덤출력
+// http://blog.naver.com/highkrs/220855155455
+// output관련
