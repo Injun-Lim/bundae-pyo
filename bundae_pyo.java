@@ -1,42 +1,55 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class bundae_pyo {
 
-	
-	
 	public static void main(String[] args) throws IOException{
-		
-//		String[][] name = new String[20][5]; 
-		String name[][] = { // x값은 기수별, y값은 동기 번호
-				{"전호영"},
-				{"김창모"},
-				{"고현기","양동빈"},
-				{"김진혁","이강희","이준행"},
-				{"정순상","한재혁"},
-				{"이우진","정선우"},
-				{"김정수"},
-				{"엄기수","조규섭"},
-				{"김효준"},
-				{"김유성","조권영","임인준","변규석"},
-				{"강효찬","배진형",},
-				{"정길환","곽준호"},
-				{"안기석"},
-				{"강성욱"},
-				{"이원석"},
-				{"심종현"},
-				{"여동근","김석우"}
-		};
+		String name[][] = null; // x값은 기수별, y값은 동기 번호
+		try {
+			BufferedReader xReader = new BufferedReader(new FileReader("C:/Users/user/Desktop/eclipse/이름목록.txt"));
+			String data = "";
+			int ti = 0, tj = 0, x = 0, y = 0;
+			while ((data = xReader.readLine()) != null) {
+				x++; // name배열의 동적할당을 위한 x값 (기수의 종류 수 (몇 기수나 있나))
+			}
+			xReader.close();
+			name = new String[x][];
+			
+			// readLine 사용해 한 라인씩 읽어들인다
+			BufferedReader reader = new BufferedReader(new FileReader("C:/Users/user/Desktop/eclipse/이름목록.txt"));
+			while ((data = reader.readLine()) != null) {
+				StringTokenizer st = new StringTokenizer(data, " ");
+				y = st.countTokens();
+				name[ti] = new String[y];
+				// System.out.println(st.countTokens());
+				while (st.hasMoreTokens()) {
+//					System.out.print(st.nextToken() + " ");
+					name[ti][tj] = st.nextToken();
+					tj++;
+				}
+				ti++;
+				tj=0;
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Random r = new Random(); //랜덤으로 섞어서
 		String temp = null;
 		List<String> nameList = new ArrayList<String>(); //대원들 이름을 차례로 넣어줄 List
 		
 		
-		for(int i = 0 ; i < name.length ; i++){  //값을 i,0번인덱스부터 i,j값까지 서로 치환
+		for(int i = 0 ; i < name.length ; i++){  //값을 0,0번인덱스부터 i,j값까지 서로 치환(랜덤섞기)
 			for(int j = 0; j<name[i].length ; j++){
 				int d =r.nextInt(name[i].length);
 				temp = name[i][j];
@@ -45,12 +58,12 @@ public class bundae_pyo {
 			}
 		}
 		
-//		for(int i = 0 ; i < name.length ; i++){ // 기수별 배열 출력
-//			for(int j = 0; j<name[i].length ; j++){
-//				System.out.print(name[i][j] + " ");
-//			}
-//			System.out.println();
-//		}
+		for(int i = 0 ; i < name.length ; i++){ // 기수별 배열 출력
+			for(int j = 0; j<name[i].length ; j++){
+				System.out.print(name[i][j] + " ");
+			}
+			System.out.println();
+		}
 		
 		for(int i = 0 ; i < name.length ; i++){  //name(2차원 배열)값을 List로 옮김
 			for(int j = 0; j<name[i].length ; j++){
@@ -176,6 +189,24 @@ public class bundae_pyo {
 		pw.println("채증 : " + otherList.get(2) + "\t채증보조 : " + otherList.get(3));
 		pw.flush();  //flush = write를 쓴 데이터를 뿌려주고 데이터 삭제
 		pw.close();  //close = 스트림 닫기
+		
+		try { // out.txt파일 콘솔에 출력
+			// readLine 사용해 한 라인씩 읽어들인다
+			BufferedReader reader = new BufferedReader(new FileReader("C:/Users/user/Desktop/eclipse/out.txt"));
+			String data = "";
+			while ((data = reader.readLine()) != null) {
+				StringTokenizer st = new StringTokenizer(data, "\n");
+				while (st.hasMoreTokens()) {
+					System.out.print(st.nextToken() + " ");
+				}
+				System.out.println();
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 
@@ -187,3 +218,5 @@ public class bundae_pyo {
 // 2차원배열 랜덤출력
 // http://blog.naver.com/highkrs/220855155455
 // output관련
+// http://arer.tistory.com/48
+// stringTokenizer 관련
