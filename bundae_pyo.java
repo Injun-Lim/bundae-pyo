@@ -155,7 +155,7 @@ public class bundae_pyo {
 			// 예외처리 ( 열외자들 제외 인원수가 16명 이하인 경우)
 		}
 		
-		for(int i = a ; i < nameList.size() ; i+=4){ // 부분 윗윗줄부터 for문
+		for(int i = a ; i < nameList.size()-4 ; i+=4){ // 부분 윗윗줄부터 for문
 			result.set(n-(b*4) , nameList.get(a+2)); 
 			result.set(n-(b*4)+1 , nameList.get(a));
 			result.set(n-(b*4)+2 , nameList.get(a+1));
