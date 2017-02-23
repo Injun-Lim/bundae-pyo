@@ -118,7 +118,6 @@ public class bundae_pyo {
 		result.set(10 , nameList.get(9));
 		result.set(11 , nameList.get(11));
 		
-		try{
 		if(nameList.size() >= 17){				// 5개의 줄이 생겨나는 최소 인원
 			if(nameList.size()%4 == 0){ 		// 부분대장 윗 줄 
 				result.set(n-8 , nameList.get(14)); 
@@ -148,17 +147,18 @@ public class bundae_pyo {
 				result.set(n-5 , nameList.get(14));
 				a=15;
 			}
-			for(int i = a ; i < nameList.size()-4 ; i+=4){ // 부분 윗윗줄부터 for문
-				result.set(n-(b*4) , nameList.get(a+2)); 
-				result.set(n-(b*4)+1 , nameList.get(a));
-				result.set(n-(b*4)+2 , nameList.get(a+1));
-				result.set(n-(b*4)+3 , nameList.get(a+3));
+			
+			if(nameList.size() > 20){ // 6번째 줄이 생기는 최소 인원
+				for(int i = a ; i < nameList.size()-4 ; i+=4){ // 부분 윗윗줄부터 for문
+					result.set(n-(b*4) , nameList.get(a+2)); 
+					result.set(n-(b*4)+1 , nameList.get(a));
+					result.set(n-(b*4)+2 , nameList.get(a+1));
+					result.set(n-(b*4)+3 , nameList.get(a+3));
+				}
 			}
-		}else{
-			throw new Exception();
-		}
-		}catch(Exception e){
-			// 예외처리 ( 열외자들 제외 인원수가 16명 이하인 경우)
+		}else if (nameList.size() <= 15){
+			System.out.println("열외자가 너무 많습니다. 소경, 항해사, 채증, 채보 제외 8명까지 가능합니다. 프로그램을 종료합니다.");
+			System.exit(0);
 		}
 		
 		
