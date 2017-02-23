@@ -14,7 +14,7 @@ public class bundae_pyo {
 	public static void main(String[] args) throws IOException{
 		String name[][] = null; // x값은 기수별, y값은 동기 번호
 		try {
-			BufferedReader xReader = new BufferedReader(new FileReader("C:/Users/user/Desktop/eclipse/이름목록.txt"));
+			BufferedReader xReader = new BufferedReader(new FileReader("C:/Users/user/Desktop/서무자동화/분대표/이름목록.txt"));
 			String data = "";
 			int ti = 0, tj = 0, x = 0, y = 0;
 			while ((data = xReader.readLine()) != null) {
@@ -24,7 +24,7 @@ public class bundae_pyo {
 			name = new String[x][];
 			
 			// readLine 사용해 한 라인씩 읽어들인다
-			BufferedReader reader = new BufferedReader(new FileReader("C:/Users/user/Desktop/eclipse/이름목록.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader("C:/Users/user/Desktop/서무자동화/분대표/이름목록.txt"));
 			while ((data = reader.readLine()) != null) {
 				StringTokenizer st = new StringTokenizer(data, " ");
 				y = st.countTokens();
@@ -148,6 +148,12 @@ public class bundae_pyo {
 				result.set(n-5 , nameList.get(14));
 				a=15;
 			}
+			for(int i = a ; i < nameList.size()-4 ; i+=4){ // 부분 윗윗줄부터 for문
+				result.set(n-(b*4) , nameList.get(a+2)); 
+				result.set(n-(b*4)+1 , nameList.get(a));
+				result.set(n-(b*4)+2 , nameList.get(a+1));
+				result.set(n-(b*4)+3 , nameList.get(a+3));
+			}
 		}else{
 			throw new Exception();
 		}
@@ -155,12 +161,6 @@ public class bundae_pyo {
 			// 예외처리 ( 열외자들 제외 인원수가 16명 이하인 경우)
 		}
 		
-		for(int i = a ; i < nameList.size()-4 ; i+=4){ // 부분 윗윗줄부터 for문
-			result.set(n-(b*4) , nameList.get(a+2)); 
-			result.set(n-(b*4)+1 , nameList.get(a));
-			result.set(n-(b*4)+2 , nameList.get(a+1));
-			result.set(n-(b*4)+3 , nameList.get(a+3));
-		}
 		
 		
 		result.set(n-4 , nameList.get(6)); // 부분대장
@@ -168,7 +168,7 @@ public class bundae_pyo {
 		result.set(n-2 , nameList.get(5));
 		result.set(n-1 , nameList.get(7));
 		
-		PrintWriter pw = new PrintWriter("C:/Users/user/Desktop/eclipse/out.txt"); // 괄호 안의 경로로 파일이 생성
+		PrintWriter pw = new PrintWriter("C:/Users/user/Desktop/서무자동화/분대표/out.txt"); // 괄호 안의 경로로 파일이 생성
 		pw.println("4분대\t3분대\t2분대\t1분대");
 		for( int i = 0 ; i < n ; i++){ // 전체 출력
 			if(i % 4 == 0){       // 비어있는 줄 삭제
@@ -192,7 +192,7 @@ public class bundae_pyo {
 		
 		try { // out.txt파일 콘솔에 출력
 			// readLine 사용해 한 라인씩 읽어들인다
-			BufferedReader reader = new BufferedReader(new FileReader("C:/Users/user/Desktop/eclipse/out.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader("C:/Users/user/Desktop/서무자동화/분대표/out.txt"));
 			String data = "";
 			while ((data = reader.readLine()) != null) {
 				StringTokenizer st = new StringTokenizer(data, "\n");
