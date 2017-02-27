@@ -169,7 +169,7 @@ public class bundae_pyo {
 		result.set(n-1 , nameList.get(7));
 		
 		PrintWriter pw = new PrintWriter("C:/Users/user/Desktop/서무자동화/분대표/out.txt"); // 괄호 안의 경로로 파일이 생성
-		pw.println("4분대\t3분대\t2분대\t1분대");
+		pw.println("4분대 \t  |\t3분대 \t  |\t2분대 \t  |\t1분대");
 		for( int i = 0 ; i < n ; i++){ // 전체 출력
 			if(i % 4 == 0){       // 비어있는 줄 삭제
 				if(result.get(i) == " "){
@@ -178,15 +178,17 @@ public class bundae_pyo {
 					}
 				}
 			}
-			pw.print(result.get(i) + "\t");
+			pw.print(result.get(i) + " \t");
 			if(i%4 == 3)
 				pw.println();
+			else
+				pw.print("  |\t");
 		}
 		
 		pw.println();pw.println();  // 열외자들 목록 뿌려주기 위함
-		pw.println("현원 (+소경,항해사,채증,채증보조): [" + nameList.size() + "+4]");
 		pw.println("소경 : " + otherList.get(0) + "\t항해사 : " + otherList.get(1));
 		pw.println("채증 : " + otherList.get(2) + "\t채증보조 : " + otherList.get(3));
+		pw.println("현원 : " + (nameList.size()+4) + "분지 1이슬");
 		pw.flush();  //flush = write를 쓴 데이터를 뿌려주고 데이터 삭제
 		pw.close();  //close = 스트림 닫기
 		
