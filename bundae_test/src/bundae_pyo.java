@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,12 +10,17 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 public class bundae_pyo {
 
 	public static void main(String[] args) throws IOException{
 		String name[][] = null; // x값은 기수별, y값은 동기 번호
 		try {
-			BufferedReader xReader = new BufferedReader(new FileReader("C:/Users/user/Desktop/서무자동화/분대표/이름목록.txt"));
+			BufferedReader xReader = new BufferedReader(new FileReader("./이름목록.txt"));
 			String data = "";
 			int ti = 0, tj = 0, x = 0, y = 0;
 			while ((data = xReader.readLine()) != null) {
@@ -24,7 +30,7 @@ public class bundae_pyo {
 			name = new String[x][];
 			
 			// readLine 사용해 한 라인씩 읽어들인다
-			BufferedReader reader = new BufferedReader(new FileReader("C:/Users/user/Desktop/서무자동화/분대표/이름목록.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader("./이름목록.txt"));
 			while ((data = reader.readLine()) != null) {
 				StringTokenizer st = new StringTokenizer(data, " ");
 				y = st.countTokens();
@@ -168,7 +174,7 @@ public class bundae_pyo {
 		result.set(n-2 , nameList.get(5));
 		result.set(n-1 , nameList.get(7));
 		
-		PrintWriter pw = new PrintWriter("C:/Users/user/Desktop/서무자동화/분대표/out.txt"); // 괄호 안의 경로로 파일이 생성
+		PrintWriter pw = new PrintWriter("./분대표.txt"); // 괄호 안의 경로로 파일이 생성
 		pw.println("4분대 \t  |\t3분대 \t  |\t2분대 \t  |\t1분대");
 		for( int i = 0 ; i < n ; i++){ // 전체 출력
 			if(i % 4 == 0){       // 비어있는 줄 삭제
@@ -192,9 +198,25 @@ public class bundae_pyo {
 		pw.flush();  //flush = write를 쓴 데이터를 뿌려주고 데이터 삭제
 		pw.close();  //close = 스트림 닫기
 		
-		try { // out.txt파일 콘솔에 출력
+//		HSSFWorkbook workbook = new HSSFWorkbook(); // 새 엑셀 생성
+//        HSSFSheet sheet = workbook.createSheet("시트명"); // 새 시트(Sheet) 생성
+//        HSSFRow row = sheet.createRow(0); // 엑셀의 행은 0번부터 시작
+//        HSSFCell cell = row.createCell(0); // 행의 셀은 0번부터 시작
+//        cell.setCellValue("테스트 데이터"); //생성한 셀에 데이터 삽입
+//        try {
+//            FileOutputStream fileoutputstream = new FileOutputStream("저장할 경로/이름.xlsx");
+//            workbook.write(fileoutputstream);
+//            fileoutputstream.close();
+//            System.out.println("엑셀파일생성성공");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println("엑셀파일생성실패");
+//        }
+
+		
+		try { // 분대표.txt파일 콘솔에 출력
 			// readLine 사용해 한 라인씩 읽어들인다
-			BufferedReader reader = new BufferedReader(new FileReader("C:/Users/user/Desktop/서무자동화/분대표/out.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader("./분대표.txt"));
 			String data = "";
 			while ((data = reader.readLine()) != null) {
 				StringTokenizer st = new StringTokenizer(data, "\n");
