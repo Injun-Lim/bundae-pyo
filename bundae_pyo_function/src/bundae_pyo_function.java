@@ -16,6 +16,9 @@ public class bundae_pyo_function {
 	public static List<String> result; //출력될 분대표 List
 	public static int n = 0 ;
 	
+	public static int bdOrder[]; // 분대 가위바위보 순서
+	public static List<String> workOrder; // 근무 순서 (분대 순위별 짬순 적용)
+	
 	public static void readAndSet() { //txt파일 불러오기부터 기수별 랜덤배열, list로 변환까지
 		try {
 			BufferedReader xReader = new BufferedReader(new FileReader("./이름목록.txt"));
@@ -101,7 +104,7 @@ public class bundae_pyo_function {
 		int a = 0, b = 3;
 		result = new ArrayList<String>(){ // 결과물이 들어갈 list
 			{
-				for(int i = 0 ; i <= n ; i ++)
+				for(int i = 0 ; i < n ; i ++)
 					add(" ");
 			}
 		};
@@ -226,17 +229,57 @@ public class bundae_pyo_function {
 //            e.printStackTrace();
 //            System.out.println("엑셀파일생성실패");
 //        }
-
-		
 	}
 
+	public static void bundaeOrder(){ //bdOrder 리스트에 분대 가위바위보 등수 랜덤 넣기
+		System.out.println("=============================================");
+		System.out.println(result);
+		Random r = new Random();
+		bdOrder = new int[4];
+		int temp = 0;
+		for( int i = 0 ; i < 4 ; i++)
+			bdOrder[i] = i; // 배열 0,1,2,3으로 초기화
+		for( int i = 0 ; i < 4 ; i++){
+			int d =r.nextInt(4); // 분대 순서 랜덤 섞기
+			temp = bdOrder[i];
+			bdOrder[i]=bdOrder[d];
+			bdOrder[d]=temp;
+		}
+		System.out.println("오늘의 근무 순서");
+		for( int i = 0 ; i < 3 ; i++)
+			System.out.print(bdOrder[i]+1 + "분대 -> ");
+		System.out.print(bdOrder[3]+1 + "분대");
+		System.out.println();
+	}
+	
+	public static void workOrder(){ //분대순서 적용하여 2-부분위~3-부분-분대장 순 적용 인덱스 생성
+		for(int i = 0 ; i < 4 ; i++){ //(분대%4) 1분대 = 0 2분대 = 1 3분대 = 2 4분대 = 3
+			for(int j = 0; j < result.size() ; j++){
+				if(j%4 == bdOrder[i]){
+					if(result.get(j) != " ")
+						workOrder.add(result.get(j)); ///////이 부분부터 수정 필요
+				}
+			}
+		}
+	}
+	public static void workTime(){ //사오지 수 입력, 사오지 이름, 명수, 근무 시작시간, 근무시간 입력 받고 인덱스 명수대로 끊기
+		
+	}
+	public static void workPrint(){
+		for(int i = 0 ; i < workOrder.size() ; i ++){
+			System.out.print(workOrder.get(i) + " ");
+		}
+	}
+	
 	public static void main(String[] args) throws IOException{
 		
 		readAndSet(); //초기 배열 세팅, list로 옮기기
 		except(); //열외자 세팅
 		bundaeSet(); //출력될 분대표(result) 세팅
 		printBundae(); //콘솔, 파일 출력부
-		
+		bundaeOrder();
+		workOrder();
+		workPrint();
 	}
 }
 
@@ -252,3 +295,15 @@ public class bundae_pyo_function {
 // stringTokenizer 관련
 // http://boxfoxs.tistory.com/304
 // 엑셀 POI 관련
+
+
+/*김진혁
+정순상
+이우진
+조권영
+이강희
+이준행
+김유성
+정길환
+강성욱
+끝*/
