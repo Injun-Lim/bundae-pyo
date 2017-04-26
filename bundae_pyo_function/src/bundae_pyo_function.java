@@ -254,11 +254,9 @@ public class bundae_pyo_function {
 	
 	public static void workOrder(){ //분대순서 적용하여 2-부분위~3-부분-분대장 순 적용 인덱스 생성
 		for(int i = 0 ; i < 4 ; i++){ //(분대%4) 1분대 = 0 2분대 = 1 3분대 = 2 4분대 = 3
-			for(int j = 0; j < result.size() ; j++){
-				if(j%4 == bdOrder[i]){
-					if(result.get(j) != " ")
-						workOrder.add(result.get(j));
-				}
+			for(int j = 3-bdOrder[i]; j < result.size() ; j+=4){ //3-분대순 한 이유는 4-3-2-1순으로 분대 나열돼서
+				if(result.get(j) != " ")
+					workOrder.add(result.get(j));
 			}
 		}
 	}
