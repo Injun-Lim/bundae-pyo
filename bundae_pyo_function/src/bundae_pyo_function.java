@@ -253,10 +253,19 @@ public class bundae_pyo_function {
 	}
 	
 	public static void workOrder(){ //분대순서 적용하여 2-부분위~3-부분-분대장 순 적용 인덱스 생성
-		for(int i = 0 ; i < 4 ; i++){ //(분대%4) 1분대 = 0 2분대 = 1 3분대 = 2 4분대 = 3
+		for(int i = 0 ; i < 4 ; i++){ //(분대%4) 4분대 = 0 3분대 = 1 2분대 = 2 1분대 = 3
 			for(int j = 3-bdOrder[i]; j < result.size() ; j+=4){ //3-분대순 한 이유는 4-3-2-1순으로 분대 나열돼서
-				if(result.get(j) != " ")
+				if(j/4 == 1 && result.get(j) != " ") //제일 막내 (2번째 줄)
 					workOrder.add(result.get(j));
+				
+				if(j/4 == (result.size()/4 )-2){ //부분대장 윗줄 선택해서
+					for(int row = 0; ; row +=4){ //한 줄씩 올려서 비교
+						if(j-row <= 7) // 이미 추가한 2번째줄 선택되면 break
+							break;
+						if(result.get(j-row) != " ") 
+							workOrder.add(result.get(j-row)); //근무자로 추가 (부분 윗줄 ~ 3번째 줄)
+					}
+				}
 			}
 		}
 	}
