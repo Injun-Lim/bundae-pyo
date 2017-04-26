@@ -17,7 +17,7 @@ public class bundae_pyo_function {
 	public static int n = 0 ;
 	
 	public static int bdOrder[]; // 분대 가위바위보 순서
-	public static List<String> workOrder; // 근무 순서 (분대 순위별 짬순 적용)
+	public static List<String> workOrder = new ArrayList<String>(); // 근무 순서 (분대 순위별 짬순 적용)
 	
 	public static void readAndSet() { //txt파일 불러오기부터 기수별 랜덤배열, list로 변환까지
 		try {
