@@ -257,7 +257,7 @@ public class bundae_pyo_function {
 			for(int j = 0; j < result.size() ; j++){
 				if(j%4 == bdOrder[i]){
 					if(result.get(j) != " ")
-						workOrder.add(result.get(j)); ///////이 부분부터 수정 필요
+						workOrder.add(result.get(j));
 				}
 			}
 		}
