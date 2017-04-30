@@ -240,18 +240,28 @@ public class bundae_pyo_function {
 	}
 
 	public static void bundaeOrder(){ //bdOrder 리스트에 분대 가위바위보 등수 랜덤 넣기
+		bdOrder = new int[4];
 		System.out.println("=============================================");
 		System.out.println(result);
-		Random r = new Random();
-		bdOrder = new int[4];
-		int temp = 0;
-		for( int i = 0 ; i < 4 ; i++)
-			bdOrder[i] = i; // 배열 0,1,2,3으로 초기화
-		for( int i = 0 ; i < 4 ; i++){
-			int d =r.nextInt(4); // 분대 순서 랜덤 섞기
-			temp = bdOrder[i];
-			bdOrder[i]=bdOrder[d];
-			bdOrder[d]=temp;
+		Scanner scan = new Scanner(System.in); //열외자들 입력 (0:소경 1:항해사 2:채증 3:채증보조)
+		System.out.print("분대 근무 순서('1' : 랜덤으로, '2' : 입력하기): ");
+		int select = scan.nextInt();
+		if(select == 1){
+			Random r = new Random();
+			int temp = 0;
+			for( int i = 0 ; i < 4 ; i++)
+				bdOrder[i] = i; // 배열 0,1,2,3으로 초기화
+			for( int i = 0 ; i < 4 ; i++){
+				int d =r.nextInt(4); // 분대 순서 랜덤 섞기
+				temp = bdOrder[i];
+				bdOrder[i]=bdOrder[d];
+				bdOrder[d]=temp;
+			}
+		}else if (select == 2){
+			for( int i = 0 ; i<4; i++){
+				System.out.print(i+1 + "등으로 근무를 설 분대(가위바위보 꼴찌부터 차례로 숫자만 입력) : ");
+				bdOrder[i] = scan.nextInt()-1;
+			}
 		}
 		System.out.println("오늘의 근무 순서");
 		for( int i = 0 ; i < 3 ; i++)
