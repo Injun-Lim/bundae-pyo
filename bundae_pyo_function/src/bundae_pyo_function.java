@@ -15,6 +15,7 @@ public class bundae_pyo_function {
 	public static List<String> otherList = new ArrayList<String>(); //열외자 List
 	public static List<String> result; //출력될 분대표 List
 	public static int n = 0 ;
+	public static int nope = 4; //없음 인원만큼 열외자 목록에서 갯수 제외하기 위한 변수
 	
 	public static int bdOrder[]; // 분대 가위바위보 순서
 	public static List<String> workOrder = new ArrayList<String>(); // 근무 순서 (분대 순위별 짬순 적용)
@@ -79,14 +80,16 @@ public class bundae_pyo_function {
 	
 	public static void except() { //열외자들 list 삭제
 		Scanner scan = new Scanner(System.in); //열외자들 입력 (0:소경 1:항해사 2:채증 3:채증보조)
-		System.out.print("소경 이름 : ");
+		System.out.print("소경 이름 ('없음' 입력가능): ");
 		otherList.add(scan.next());
-		System.out.print("항해사 이름 : ");
+		System.out.print("항해사 이름 ('없음' 입력가능): ");
 		otherList.add(scan.next());
-		System.out.print("채증 이름 : ");
+		System.out.print("채증 이름 ('없음' 입력가능): ");
 		otherList.add(scan.next());
-		System.out.print("채증 보조 이름 : ");
+		System.out.print("채증 보조 이름 ('없음' 입력가능): ");
 		otherList.add(scan.next());
+
+		
 		for(; ;){ //무한루프로 기타 열외자 이름 입력받음 ( '끝' 입력시 루프 탈출 )
 			System.out.print("기타 영외활동 등 열외자 이름('끝'이라고 입력시 열외자 입력 종료) : ");
 			otherList.add(scan.next());
@@ -95,8 +98,13 @@ public class bundae_pyo_function {
 				break;
 			}
 		}
-		for(int i = 0; i < otherList.size(); i++)
+		for(int i = 0; i < otherList.size(); i++){
+			if(otherList.get(i).equals("없음")){// 없음 입력시 인덱스 삭제 x
+				nope--;	//없음 인원만큼 열외자 목록에서 갯수 제외하기 위한 변수
+				continue;
+			}
 			nameList.remove(nameList.indexOf(otherList.get(i))); // 열외자 인덱스 삭제
+		}
 	}
 	
 	public static void bundaeSet(){
@@ -194,7 +202,7 @@ public class bundae_pyo_function {
 		pw.println();pw.println();  // 열외자들 목록 뿌려주기 위함
 		pw.println("소경 : " + otherList.get(0) + "\t항해사 : " + otherList.get(1));
 		pw.println("채증 : " + otherList.get(2) + "\t채증보조 : " + otherList.get(3));
-		pw.println("현원 : " + (nameList.size()+4) + "분지 1이슬");
+		pw.println("현원 : " + (nameList.size()+nope) + "분지 1이슬");
 		pw.flush();  //flush = write를 쓴 데이터를 뿌려주고 데이터 삭제
 		pw.close();  //close = 스트림 닫기
 		
@@ -312,7 +320,7 @@ public class bundae_pyo_function {
 김진혁
 정순상
 이우진
-조권영
+없음
 이강희
 이준행
 김유성
