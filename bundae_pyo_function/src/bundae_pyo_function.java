@@ -19,6 +19,8 @@ public class bundae_pyo_function {
 	
 	public static int bdOrder[]; // 분대 가위바위보 순서
 	public static List<String> workOrder = new ArrayList<String>(); // 근무 순서 (분대 순위별 짬순 적용)
+	public static List<String> workName = new ArrayList<String>(); // 사오지 이름
+	public static List<String> workFinal = new ArrayList<String>(); // 최종 근무 출력물
 	
 	public static void readAndSet() { //txt파일 불러오기부터 기수별 랜덤배열, list로 변환까지
 		try {
@@ -239,11 +241,11 @@ public class bundae_pyo_function {
 //        }
 	}
 
-	public static void bundaeOrder(){ //bdOrder 리스트에 분대 가위바위보 등수 랜덤 넣기
+	public static void bundaeOrder(){ //bdOrder 리스트에 분대 가위바위보 등수 넣기
 		bdOrder = new int[4];
 		System.out.println("=============================================");
 		System.out.println(result);
-		Scanner scan = new Scanner(System.in); //열외자들 입력 (0:소경 1:항해사 2:채증 3:채증보조)
+		Scanner scan = new Scanner(System.in);
 		System.out.print("분대 근무 순서('1' : 랜덤으로, '2' : 입력하기): ");
 		int select = scan.nextInt();
 		if(select == 1){
@@ -296,11 +298,43 @@ public class bundae_pyo_function {
 		}
 	}
 	public static void workTime(){ //사오지 수 입력, 사오지 이름, 명수, 근무 시작시간, 근무시간 입력 받고 인덱스 명수대로 끊기
+		Scanner scan = new Scanner(System.in);
+		System.out.print("근무지 수 입력 : ");
+		int workN = scan.nextInt(); //사오지 갯수
+		System.out.print("근무 시작 시간 입력 ex(8시30분=830, 13시=1300) : ");
+		int workSTime = scan.nextInt(); //근무시작시간
+		System.out.print("근무 시간 입력 ex(1시간=100, 1시간 30분 =130, 30분=30) : ");
+		int workTime = scan.nextInt(); //근무시간
+		int workerN[] = new int[workN]; //사오지 갯수만큼 사오지별 인원수 인덱스 추가
+		for ( int i = 0 ; i < workN ; i++){
+			System.out.print(i+1 + "번째 근무 이름 입력 ex(고정1) : ");
+			workName.add(scan.next()); //사오지 이름
+			System.out.print(i+1 + "번째 근무지 근무인원 입력 : ");
+			workerN[i] = scan.nextInt(); //사오지별 인원수
+		}
+		int index = 0;
+		for(int howMany =  0; howMany < 24 ; howMany++){//howmany는 몇 번째 근무까지 계산할지
+			for(int i = 0 ; i < workN ; i ++){
+				for(int j = 0 ; j < workerN[i] ; j++){
+					if(index >= workOrder.size())
+						index=0;
+					workFinal.add(workOrder.get(index));
+					index++;
+				}
+				workFinal.add("\t"); //근무지별 탭 간격
+			}
+			workFinal.add("\n"); //근무시간별 엔터 간격
+			
+		}
 		
 	}
 	public static void workPrint(){
 		for(int i = 0 ; i < workOrder.size() ; i ++){
 			System.out.print(workOrder.get(i) + " ");
+		}
+		System.out.println("");
+		for(int i = 0 ; i < workFinal.size() ; i ++){
+			System.out.print(workFinal.get(i) + " ");
 		}
 	}
 	
@@ -310,9 +344,10 @@ public class bundae_pyo_function {
 		except(); //열외자 세팅
 		bundaeSet(); //출력될 분대표(result) 세팅
 		printBundae(); //콘솔, 파일 출력부
-		bundaeOrder();
-		workOrder();
-		workPrint();
+		bundaeOrder(); //분대 가위바위보 순서 적용
+		workOrder(); //근무자들 근무 순서 적용
+		workTime(); //근무 조건별 적용
+		workPrint(); //출력
 	}
 }
 
