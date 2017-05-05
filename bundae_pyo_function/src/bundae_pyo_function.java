@@ -342,18 +342,42 @@ public class bundae_pyo_function {
 		}
 		
 	}
-	public static void workPrint(){
-		System.out.print("근무 순서 : ");
+	public static void workPrint() throws FileNotFoundException{
+		
+		PrintWriter pw = new PrintWriter("./근무표.txt"); // 괄호 안의 경로로 파일이 생성
+		pw.print("근무 순서 : ");
 		for(int i = 0 ; i < workOrder.size() ; i ++){
-			System.out.print(workOrder.get(i) + " ");
+			pw.print(workOrder.get(i) + " ");
 		}
-		System.out.println("");
+		pw.println("");
 		for(int i = 0 ; i < workFinal.size() ; i ++){
-			System.out.print(workFinal.get(i));
-			if(workFinal.get(i).equals("\t") || workFinal.get(i).equals("\n")){}
-			else
-				System.out.print(" ");
+			if(workFinal.get(i).equals("\n")){ //\n 출력시 깨져보이는 문제 해결용
+				pw.println("");
+			}else
+				pw.print(workFinal.get(i) + " ");
 		}
+		pw.flush();  //flush = write를 쓴 데이터를 뿌려주고 데이터 삭제
+		pw.close();  //close = 스트림 닫기
+		
+		try { // 분대표.txt파일 콘솔에 출력
+			// readLine 사용해 한 라인씩 읽어들인다
+			BufferedReader reader = new BufferedReader(new FileReader("./근무표.txt"));
+			String data = "";
+			while ((data = reader.readLine()) != null) {
+				StringTokenizer st = new StringTokenizer(data, "\n");
+				while (st.hasMoreTokens()) {
+					System.out.print(st.nextToken() + " ");
+				}
+				System.out.println();
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	public static void main(String[] args) throws IOException{
