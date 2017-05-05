@@ -386,10 +386,16 @@ public class bundae_pyo_function {
 		except(); //열외자 세팅
 		bundaeSet(); //출력될 분대표(result) 세팅
 		printBundae(); //콘솔, 파일 출력부
-		bundaeOrder(); //분대 가위바위보 순서 적용
-		workOrder(); //근무자들 근무 순서 적용
-		workTime(); //근무 조건별 적용
-		workPrint(); //출력
+		
+		Scanner scan = new Scanner(System.in);
+		System.out.print("근무표를 짜시겠습니까?(y/n) : ");
+		String yn = scan.nextLine();
+		if(yn.equals("Y") || yn.equals("y")){
+			bundaeOrder(); //분대 가위바위보 순서 적용
+			workOrder(); //근무자들 근무 순서 적용
+			workTime(); //근무 조건별 적용
+			workPrint(); //출력
+		}
 	}
 }
 
