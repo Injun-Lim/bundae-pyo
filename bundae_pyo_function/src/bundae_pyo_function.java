@@ -244,7 +244,6 @@ public class bundae_pyo_function {
 	public static void bundaeOrder(){ //bdOrder 리스트에 분대 가위바위보 등수 넣기
 		bdOrder = new int[4];
 		System.out.println("=============================================");
-		System.out.println(result);
 		Scanner scan = new Scanner(System.in);
 		System.out.print("분대 근무 순서('1' : 랜덤으로, '2' : 입력하기): ");
 		int select = scan.nextInt();
@@ -303,17 +302,32 @@ public class bundae_pyo_function {
 		int workN = scan.nextInt(); //사오지 갯수
 		System.out.print("근무 시작 시간 입력 ex(8시30분=830, 13시=1300) : ");
 		int workSTime = scan.nextInt(); //근무시작시간
-		System.out.print("근무 시간 입력 ex(1시간=100, 1시간 30분 =130, 30분=30) : ");
+		System.out.print("근무 시간 분단위로 입력 ex(1시간=60, 1시간 30분 =90, 30분=30) : ");
 		int workTime = scan.nextInt(); //근무시간
 		int workerN[] = new int[workN]; //사오지 갯수만큼 사오지별 인원수 인덱스 추가
+		workFinal.add("근무시간\t\t"); //사오지 이름별 탭간격
 		for ( int i = 0 ; i < workN ; i++){
 			System.out.print(i+1 + "번째 근무 이름 입력 ex(고정1) : ");
-			workName.add(scan.next()); //사오지 이름
+			workFinal.add(scan.next() + "\t\t"); //사오지 이름
 			System.out.print(i+1 + "번째 근무지 근무인원 입력 : ");
 			workerN[i] = scan.nextInt(); //사오지별 인원수
 		}
-		int index = 0;
+		workFinal.add("\n"); //사오지 이름입력다되면 줄바꿈
+		int index = 0, stHour = workSTime/100, stMin = workSTime%100;  //다음 근무자 지정 인덱스, 근무 시,분 저장 변수
 		for(int howMany =  0; howMany < 24 ; howMany++){//howmany는 몇 번째 근무까지 계산할지
+			
+			workFinal.add(String.valueOf(String.format("%02d", stHour)+":"+ String.format("%02d", stMin))+ " ~"); //format을 사용한 부분은 숫자를 2자리로 표현하기 위함
+			stMin += workTime; //stMin에 근무시간 더해주기
+			if(stMin>=60){
+				stHour+=(stMin/60); //60분 넘으면 '시'에 옮기기 
+				stMin-=(stMin/60)*60; //넘긴만큼 빼기
+			}
+			
+			if(stHour >= 24) //24시 = 00시
+				stHour -= 24;
+
+			
+			workFinal.add(String.valueOf(String.format("%02d", stHour)+":"+ String.format("%02d", stMin))+ "\t"); //format을 사용한 부분은 숫자를 2자리로 표현하기 위함
 			for(int i = 0 ; i < workN ; i ++){
 				for(int j = 0 ; j < workerN[i] ; j++){
 					if(index >= workOrder.size())
@@ -329,12 +343,16 @@ public class bundae_pyo_function {
 		
 	}
 	public static void workPrint(){
+		System.out.print("근무 순서 : ");
 		for(int i = 0 ; i < workOrder.size() ; i ++){
 			System.out.print(workOrder.get(i) + " ");
 		}
 		System.out.println("");
 		for(int i = 0 ; i < workFinal.size() ; i ++){
-			System.out.print(workFinal.get(i) + " ");
+			System.out.print(workFinal.get(i));
+			if(workFinal.get(i).equals("\t") || workFinal.get(i).equals("\n")){}
+			else
+				System.out.print(" ");
 		}
 	}
 	
@@ -379,4 +397,12 @@ public class bundae_pyo_function {
 변규석
 강효찬
 끝
+1
+2
+830
+150
+고정1
+2
+고정2
+2
 */
