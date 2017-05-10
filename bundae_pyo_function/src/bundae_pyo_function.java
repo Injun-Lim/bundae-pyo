@@ -304,25 +304,37 @@ public class bundae_pyo_function {
 		int workSTime = scan.nextInt(); //근무시작시간
 		System.out.print("근무 시간 분단위로 입력 ex(1시간=60, 1시간 30분 =90, 30분=30) : ");
 		int workTime = scan.nextInt(); //근무시간
+		System.out.print("타소대와 격대 여부(y/n) : ");
+		String chanYN = scan.next(); //타소대와 격대 여부 y/n으로 입력받음
 		int workerN[] = new int[workN]; //사오지 갯수만큼 사오지별 인원수 인덱스 추가
 		workFinal.add("근무시간\t\t"); //사오지 이름별 탭간격
 		for ( int i = 0 ; i < workN ; i++){
 			System.out.print(i+1 + "번째 근무 이름 입력 ex(고정1) : ");
-			workFinal.add(scan.next() + "\t\t"); //사오지 이름
+			workFinal.add(scan.next()); //사오지 이름
 			System.out.print(i+1 + "번째 근무지 근무인원 입력 : ");
 			workerN[i] = scan.nextInt(); //사오지별 인원수
+			for(int l = 0 ; l<workerN[i] ; l++) //근무자 수만큼 근무지(맨윗줄) 공백 추가
+				workFinal.add("\t");
 		}
 		workFinal.add("\n"); //사오지 이름입력다되면 줄바꿈
+		
 		int index = 0, stHour = workSTime/100, stMin = workSTime%100;  //다음 근무자 지정 인덱스, 근무 시,분 저장 변수
 		for(int howMany =  0; howMany < 24 ; howMany++){//howmany는 몇 번째 근무까지 계산할지
-			
+			if(chanYN.equals("y") || chanYN.equals("Y")){
+				stMin += workTime*2; //stMin에 타소대 근무시간 더해주기
+				if(stMin>=60){
+					stHour+=(stMin/60); //60분 넘으면 '시'에 옮기기 
+					stMin-=(stMin/60)*60; //넘긴만큼 빼기
+				}
+				if(stHour >= 24) //24시 = 00시
+					stHour -= 24;
+			}
 			workFinal.add(String.valueOf(String.format("%02d", stHour)+":"+ String.format("%02d", stMin))+ " ~"); //format을 사용한 부분은 숫자를 2자리로 표현하기 위함
 			stMin += workTime; //stMin에 근무시간 더해주기
 			if(stMin>=60){
 				stHour+=(stMin/60); //60분 넘으면 '시'에 옮기기 
 				stMin-=(stMin/60)*60; //넘긴만큼 빼기
 			}
-			
 			if(stHour >= 24) //24시 = 00시
 				stHour -= 24;
 
